@@ -1,7 +1,11 @@
 FROM mongo
 
 # Install Python and Cron
-RUN apt-get update && apt-get -y install awscli cron
+RUN apt-get update && \
+    apt-get -y install python3 python3-pip python3-dev cron libyaml-dev
+
+# Install AWS CLI and schedule package
+RUN pip3 install awscli
 
 ENV CRON_TIME="0 3 * * *" \
   TZ=US/Eastern \
