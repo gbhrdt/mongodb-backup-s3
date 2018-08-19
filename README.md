@@ -18,15 +18,15 @@ Play well with this docker [nginx-letsencrypt-mongo-portainer](https://github.co
 docker run -d \
   --env AWS_ACCESS_KEY_ID=awsaccesskeyid \
   --env AWS_SECRET_ACCESS_KEY=awssecretaccesskey \
-  --env BUCKET=mybucketname
+  --env BUCKET=mybucketname \
   --env MONGODB_HOST=mongodb.host \
   --env MONGODB_PORT=27017 \
   --env MONGODB_USER=admin \
   --env MONGODB_PASS=password \
-  deenoize/mongodb-backup-s3
+  mongodb-backup-s3
 ```
 
-If you link `deenoize/mongodb-backup-s3` to a mongodb container with an alias named mongodb, this image will try to auto load the `host`, `port`, `user`, `pass` if possible. Like this:
+If you link `flarno11/mongodb-backup-s3` to a mongodb container with an alias named mongodb, this image will try to auto load the `host`, `port`, `user`, `pass` if possible. Like this:
 
 ```
 docker run -d \
@@ -36,7 +36,7 @@ docker run -d \
   --env BACKUP_FOLDER=a/sub/folder/path/ \
   --env INIT_BACKUP=true \
   --link my_mongo_db:mongodb \
-  deenoize/mongodb-backup-s3
+  flarno11/mongodb-backup-s3
 ```
 
 If your bucket in not standard region and you get `A client error (PermanentRedirect) occurred when calling the PutObject operation: The bucket you are attempting to access must be addressed using the specified endpoint. Please send all future requests to this endpoint` use BUCKET_REGION env var like this:
@@ -50,7 +50,7 @@ docker run -d \
   --env BACKUP_FOLDER=a/sub/folder/path/ \
   --env INIT_BACKUP=true \
   --link my_mongo_db:mongodb \
-  deenoize/mongodb-backup-s3
+  flarno11/mongodb-backup-s3
 ```
 
 Add to a docker-compose.yml to enhance your robotic army:
@@ -58,7 +58,7 @@ Add to a docker-compose.yml to enhance your robotic army:
 For automated backups
 ```
 mongodbbackup:
-  image: 'deenoize/mongodb-backup-s3:latest'
+  image: 'flarno11/mongodb-backup-s3:latest'
   links:
     - mongodb
   environment:
@@ -72,7 +72,7 @@ mongodbbackup:
 Or use `INIT_RESTORE` with `DISABLE_CRON` for seeding/restoring/starting a db (great for a fresh instance or a dev machine)
 ```
 mongodbbackup:
-  image: 'deenoize/mongodb-backup-s3:latest'
+  image: 'flarno11/mongodb-backup-s3:latest'
   links:
     - mongodb
   environment:
